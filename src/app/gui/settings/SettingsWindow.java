@@ -9,6 +9,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import app.Config;
+import app.gui.view.Window;
 
 import static app.Config.*;
 
@@ -136,6 +137,7 @@ public class SettingsWindow extends JFrame {
 		root.add(westPanel, BorderLayout.WEST);
 		westPanel.setOpaque(false);
 		
+		Window.getIntance().setEnabled(false);
 		this.setVisible(true);
 		
 		okBtn.addActionListener(e -> { closeWindow(); });
@@ -159,6 +161,7 @@ public class SettingsWindow extends JFrame {
 	
 	public void closeWindow() { 
 		
+		Window.getIntance().setEnabled(true);
 		instance = null;
 		dispose(); 
 		

@@ -33,8 +33,8 @@ class Menu extends JMenuBar {
 		actionsMenu.add(stopBtn);
 		stopBtn.setEnabled(false);
 		
-		startBtn.addActionListener(new Start(stopBtn));
-		stopBtn.addActionListener(new Stop(startBtn));
+		startBtn.addActionListener(new Start(stopBtn, settingsBtn, saveBtn));
+		stopBtn.addActionListener(new Stop(startBtn, settingsBtn, saveBtn));
 		
 		settingsBtn.addActionListener(e -> { SettingsWindow.getInstance(); });
 		

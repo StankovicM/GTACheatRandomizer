@@ -13,8 +13,16 @@ import app.randomizer.Randomizer;
 public class Start implements ActionListener {
 
 	private JMenuItem stopBtn;
+	private JMenuItem settingsBtn;
+	private JMenuItem saveBtn;
 	
-	public Start(JMenuItem stopBtn) { this.stopBtn = stopBtn; }
+	public Start(JMenuItem stopBtn, JMenuItem settingsBtn, JMenuItem saveBtn) { 
+		
+		this.stopBtn = stopBtn;
+		this.settingsBtn = settingsBtn;
+		this.saveBtn = saveBtn;
+		
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -28,6 +36,8 @@ public class Start implements ActionListener {
 		
 		Randomizer.getInstance(dlm).start();
 		stopBtn.setEnabled(true);
+		settingsBtn.setEnabled(false);
+		saveBtn.setEnabled(false);
 		((JMenuItem)e.getSource()).setEnabled(false);
 		
 	}

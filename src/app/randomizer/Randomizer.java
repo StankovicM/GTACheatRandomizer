@@ -69,7 +69,7 @@ public class Randomizer extends Thread {
 						cheatCounter = 0;
 						String cheatCode = dlm.get(new Random(now).nextInt(dlm.size())).getCode();
 						
-						if (currentCode != null && !Config.doStack)
+						if (currentCode != null && !currentCode.equalsIgnoreCase(cheatCode) && !Config.doStack)
 							Window.getIntance().getSender().sendCheat(currentCode);
 						
 						if (currentCode == null || !currentCode.equalsIgnoreCase(cheatCode))
