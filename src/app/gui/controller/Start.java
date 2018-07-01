@@ -23,6 +23,9 @@ public class Start implements ActionListener {
 		if (dlm.isEmpty())
 			return;
 		
+		Window.getIntance().getAddBtn().setEnabled(false);
+		Window.getIntance().getRemoveBtn().setEnabled(false);
+		
 		Randomizer.getInstance(dlm).start();
 		stopBtn.setEnabled(true);
 		((JMenuItem)e.getSource()).setEnabled(false);

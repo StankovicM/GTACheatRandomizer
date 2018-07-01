@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javax.swing.DefaultListModel;
 
-import app.gui.Constants;
+import app.Config;
 import app.gui.model.Cheat;
 import app.gui.view.Window;
 
@@ -50,6 +50,7 @@ public class Randomizer extends Thread {
 		long counter = 0;
 		
 		int cheatCounter = 0;
+		boolean doChange = true;
 		while (running) {
 			long now = System.nanoTime();
 			long delta = now - lastTime;
@@ -63,18 +64,21 @@ public class Randomizer extends Thread {
 				
 				if (counter >= 1000000000l) {
 					counter = 0;
-					if (++cheatCounter >= Constants.changeTime) {
+					
+					if (++cheatCounter >= Config.changeTime && doChange) {
 						cheatCounter = 0;
-						String cheatCode = "";
-						while ((cheatCode = dlm.get(new Random(now).nextInt(dlm.size())).getCode()).equalsIgnoreCase(currentCode));
+						String cheatCode = dlm.get(new Random(now).nextInt(dlm.size())).getCode();
 						
-						if (currentCode != null)
+						if (currentCode != null && !Config.doStack)
 							Window.getIntance().getSender().sendCheat(currentCode);
 						
-						Window.getIntance().getSender().sendCheat(cheatCode);
+						if (currentCode == null || !currentCode.equalsIgnoreCase(cheatCode))
+							Window.getIntance().getSender().sendCheat(cheatCode);
 						
 						currentCode = cheatCode;
 						System.out.println(cheatCode);
+						if (Config.changeTime == 0)
+							doChange = false;
 					}
 				}
 			}

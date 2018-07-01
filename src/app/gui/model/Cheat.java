@@ -20,6 +20,22 @@ public class Cheat {
 
 	public void setEffect(String effect) { this.effect = effect; }
 	
+	
+	
+	@Override
+	public boolean equals(Object o) {
+
+		if (o instanceof Cheat) {
+			if (((Cheat)o).getCode().equalsIgnoreCase(code))
+				return true;
+			
+			return false;
+		}
+		
+		return false;
+		
+	}
+
 	@Override
 	public String toString() { return code + " - " + effect; }
 	

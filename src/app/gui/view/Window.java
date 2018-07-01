@@ -10,10 +10,10 @@ import javax.swing.JScrollPane;
 import app.gui.controller.AddCheat;
 import app.gui.controller.RemoveCheat;
 import app.gui.model.Cheat;
-import app.util.CheatLoader;
+import app.util.FileUtils;
 import app.util.CheatSender;
 
-import static app.gui.Constants.*;
+import static app.Config.*;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,7 +27,7 @@ public class Window extends JFrame {
 	private Menu menu = new Menu();
 	
 	private FlowLayout rootFl = new FlowLayout(FlowLayout.CENTER, 10, 10);
-	private JPanel root = new JPanel(rootFl);
+	private BackgroundPanel root = new BackgroundPanel(rootFl);
 	
 	private DefaultListModel<Cheat> clDLM = new DefaultListModel<>();
 	private JList<Cheat> cheatList = new JList<>(clDLM);
@@ -57,23 +57,30 @@ public class Window extends JFrame {
 	private void createWindow() {
 		
 		this.setTitle(TITLE);
+		this.setIconImage(ICON);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(DEF_WIN_W, DEF_WIN_H);
 		this.setLocation(SCR_W / 2 - DEF_WIN_W / 2, SCR_H / 2 - DEF_WIN_H / 2);
+		this.setResizable(false);
 		this.setContentPane(root);
 		this.setJMenuBar(menu);
-		root.setPreferredSize(DEF_WIN_DIM);
-		root.setSize(DEF_WIN_DIM);
+		root.setPreferredSize(new Dimension(1024, 708));
+		root.setSize(new Dimension(1024, 708));
 		root.setAlignmentY(CENTER_ALIGNMENT);
 		
 		root.add(cheatListJsp);
 		cheatListJsp.setPreferredSize(DEF_SCRL_DIM);
 		cheatListJsp.setSize(DEF_SCRL_DIM);
+		cheatListJsp.setOpaque(false);
+		cheatListJsp.getViewport().setOpaque(false);
 		cheatList.setPreferredSize(DEF_LIST_DIM);
 		cheatList.setSize(DEF_LIST_DIM);
+		cheatList.setOpaque(false);
+		cheatList.setCellRenderer(new TransparentCellRenderer());
 		
 		root.add(chooserPanel);
 		chooserPanel.setPreferredSize(new Dimension(100, 90));
+		chooserPanel.setOpaque(false);
 		
 		chooserPanel.add(addBtn);
 		addBtn.setPreferredSize(new Dimension(80, 30));
@@ -84,10 +91,15 @@ public class Window extends JFrame {
 		root.add(chosenCheatListJsp);
 		chosenCheatListJsp.setPreferredSize(DEF_SCRL_DIM);
 		chosenCheatListJsp.setSize(DEF_SCRL_DIM);
+		chosenCheatListJsp.setOpaque(false);
+		chosenCheatListJsp.getViewport().setOpaque(false);
 		chosenCheatList.setPreferredSize(DEF_LIST_DIM);
 		chosenCheatList.setSize(DEF_LIST_DIM);
+		chosenCheatList.setOpaque(false);
+		chosenCheatList.setCellRenderer(new TransparentCellRenderer());
 		
-		CheatLoader.loadCheats("Cheats.txt", cheatList);
+		FileUtils.loadConfig("config.json", chosenCheatList);
+		FileUtils.loadCheats("cheats.txt", cheatList, cclDLM);
 		addBtn.addActionListener(new AddCheat());
 		removeBtn.addActionListener(new RemoveCheat());
 		this.setVisible(true);
